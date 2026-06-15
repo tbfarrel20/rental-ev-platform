@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -332,6 +332,7 @@ input[type="range"] { width: 100%; accent-color: var(--primary); }
   display: flex; align-items: center; justify-content: center;
 }
 .vehicle-card-img svg { width: 75%; opacity: .7; }
+.vehicle-card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .card-badges { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
 .vehicle-card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
 .vehicle-card-name { font-size: 16px; font-weight: 700; color: var(--text); }
@@ -1632,16 +1633,26 @@ tr:hover td { background: var(--bg); }
      ============================================================ -->
 <script>
 /* ─── DATA ───────────────────────────────────────────────── */
+const GH_RAW = 'https://raw.githubusercontent.com/tbfarrel20/rental-ev-platform/c0be4357cbc7221b6ba6623c60c1d97ccf9cd5f4/frontend/';
 const VEHICLES = [
-  { id:1, name:'Toyota Avanza',       cat:'MPV',      trans:'Manual',    seats:7, price:300000,  rating:4.7, reviews:312, type:'conventional', badge:'popular' },
-  { id:2, name:'Honda Civic',         cat:'Sedan',    trans:'Automatic', seats:5, price:450000,  rating:4.8, reviews:189, type:'conventional', badge:'popular' },
-  { id:3, name:'Hyundai Ioniq 5',     cat:'SUV',      trans:'Automatic', seats:5, price:850000,  rating:4.9, reviews:98,  type:'ev',           badge:'ev' },
-  { id:4, name:'Mitsubishi Pajero Sport', cat:'SUV',  trans:'Automatic', seats:7, price:750000,  rating:4.6, reviews:224, type:'conventional', badge:'' },
-  { id:5, name:'Wuling Air ev',       cat:'Hatchback',trans:'Automatic', seats:4, price:350000,  rating:4.5, reviews:156, type:'ev',           badge:'ev' },
-  { id:6, name:'Toyota Innova Zenix', cat:'MPV',      trans:'Automatic', seats:7, price:550000,  rating:4.8, reviews:267, type:'conventional', badge:'popular' },
-  { id:7, name:'Kia EV6',            cat:'Sedan',    trans:'Automatic', seats:5, price:900000,  rating:4.9, reviews:64,  type:'ev',           badge:'ev' },
-  { id:8, name:'Suzuki Ertiga',       cat:'MPV',      trans:'Manual',    seats:7, price:280000,  rating:4.5, reviews:401, type:'conventional', badge:'' },
-  { id:9, name:'BMW iX',             cat:'SUV',      trans:'Automatic', seats:5, price:1400000, rating:5.0, reviews:31,  type:'ev',           badge:'ev' },
+  { id:1, name:'Toyota Avanza',           cat:'MPV',      trans:'Manual',    seats:7, price:300000,  rating:4.7, reviews:312, type:'conventional', badge:'popular',
+    photo: GH_RAW + 'harga%20toyota%20avanza%20terbaru-All%20New%20Toyota%20Avanza.jpg' },
+  { id:2, name:'Honda Civic',             cat:'Sedan',    trans:'Automatic', seats:5, price:450000,  rating:4.8, reviews:189, type:'conventional', badge:'popular',
+    photo: GH_RAW + 'q0jm1Zs1iTmblxD2Wur0TKqdLwq6ajsB9A1gE5wAYZ7TZkQJG4sp2CPSrZs8AvYcv7pTamGDpsb-eM33dbMUN1XjhXFTNqzWoU9E_7FUjI6LsuaejzHrwg0Eo-BHGnaBbhhLNpbu2h94hckAXvqWhEK8VEHh2NbPZK9zpXKVTtfLkfmbFCaiE78at7opFwgj.jpg' },
+  { id:3, name:'Hyundai Ioniq 5',         cat:'SUV',      trans:'Automatic', seats:5, price:850000,  rating:4.9, reviews:98,  type:'ev',           badge:'ev',
+    photo: GH_RAW + 'VSUFHQZrc_nlXI9H2sy05dT_fz7hVEfb9T2nDDYMraCEItLbC1AbvR7D6ApsKZW5vScCm58cwVg4A6HDka4xEXl7szNDivduP_UuHSjfNgilx13YjqPKMKSyE9I4rN0vpTsZF_pE3lnj7SiAx0IxCIZtFtAoqLIQrehyQvcvb-4hwzGMLMIS41wS5kT1GU0J.jpg' },
+  { id:4, name:'Mitsubishi Pajero Sport', cat:'SUV',      trans:'Automatic', seats:7, price:750000,  rating:4.6, reviews:224, type:'conventional', badge:'',
+    photo: GH_RAW + 'aq18z4CdkXuYaI411EoA8wPUVomH432kCT98A6B16PfPxNL-22xDQlY-sysxAGSc_HqqhRjAv8ivzp0qzPHBXzx20qzayIiZBh_EE-NmcvIiyD5K-2do7AyynzHYSMrE8ZekG30eNJNQpuwCJf7ofoYzSxeYYuoTtXrF7PZ3mJo3WXY0GezMYT-wplORqzWq.jpg' },
+  { id:5, name:'Wuling Air ev',           cat:'Hatchback',trans:'Automatic', seats:4, price:350000,  rating:4.5, reviews:156, type:'ev',           badge:'ev',
+    photo: GH_RAW + 'cF-KJ2VKX2A4xDEI3UTTrBiFfa7FEaRCMT0iZwJaSWfk-VC00kVd80ilqW3kqE4G2dRcW2mgXmfsON-_vy2GhfPVjj7qyqP7p6IRSFERt8IVYCnN-Q5wFK0oi2XkjNKMQeYwqonzLAzI2Fb_XT_e8mPqVFpOBGAATnKs0XVr8owhdN05_8N0SvWMlQkqA7Qb.jpg' },
+  { id:6, name:'Toyota Innova Zenix',     cat:'MPV',      trans:'Automatic', seats:7, price:550000,  rating:4.8, reviews:267, type:'conventional', badge:'popular',
+    photo: GH_RAW + '0tq_X9euvtHYOSgkKMUKF9z-GZeFkj7B6tRJbljJFNpE5hHUDI5guLdJ9hvmsE9kMGsy5jZevKuSI6Rh1mAogiLBYSIbN5IgCR2G-JnakIkjIDdQ_dClgzgRVmQ19AFenSW4KlHaXiVn6edzTTB1a4dtRI8MGh-LEqo_t7sFaLrkl5tMDSSq_QW26PCjLcLV.jpg' },
+  { id:7, name:'Kia EV6',                cat:'Sedan',    trans:'Automatic', seats:5, price:900000,  rating:4.9, reviews:64,  type:'ev',           badge:'ev',
+    photo: GH_RAW + 'OqECvX27ujAN73N9r0O1t9XTGTo8VceKTRT04fAAB45dDVQkZMi5e_jrWT196Lw7jTtSI1IHG44YAJv4FutKVm1M7XZvOv1644nt6oQY2XBhT88CASBWdVCT8LQeH8ORg1wZ_aIvnYBXPokhyIQQ1h17ZqaP8zrgYXaUPUYylyqPoP7TSIXkoP4rluQO6Hvb.jpg' },
+  { id:8, name:'Suzuki Ertiga',           cat:'MPV',      trans:'Manual',    seats:7, price:280000,  rating:4.5, reviews:401, type:'conventional', badge:'',
+    photo: GH_RAW + 'NWKg_aS6HfiPzWN3ybpnKnBxQs9dIPqpgPbq57_yipQKW517EjUD_RX8i_GL15dJmqYRyOSgJDZZiCWakOvKqiS5Ce3xpSI5QvlJrF5SRJ9ZUtaHpejTpEjaIW4OMrlVRwKQp8IHw_O1T10gezSgAzbisyL8tHbUFSc5icNJy_La48Jv3UIr5k-vRvBIQ2ou.jpg' },
+  { id:9, name:'BMW iX',                 cat:'SUV',      trans:'Automatic', seats:5, price:1400000, rating:5.0, reviews:31,  type:'ev',           badge:'ev',
+    photo: GH_RAW + 'm1sl6IxfLiBaOtMuMQxQmukiVKKjgPu8LnTI-TQdJW2eZgbDShbXgMs3gkTWR4fltuBk1hMqsJTQCRr3WXY0GezMYT-wplORqzWq.jpg' },
 ];
 
 /* ─── CAR SVG ILLUSTRATIONS ─────────────────────────────── */
@@ -1707,7 +1718,9 @@ function renderVehicles() {
   grid.innerHTML = page.map(v => `
     <article class="vehicle-card" role="listitem">
       <div class="vehicle-card-img">
-        ${carSVG(v.type, v.cat)}
+        <img src="${v.photo}" alt="${v.name}" loading="lazy"
+             style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+             onerror="this.style.display='none'">
         <div class="card-badges">
           ${v.badge === 'ev'      ? '<span class="badge badge-ev">⚡ ECO EV</span>' : ''}
           ${v.badge === 'popular' ? '<span class="badge badge-pop">🔥 Popular</span>' : ''}
@@ -2250,4 +2263,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-z
