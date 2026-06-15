@@ -1604,6 +1604,7 @@ tr:hover td { background: var(--bg); }
       </button>
     </div>
     <div class="modal-body">
+      <form id="loginForm" onsubmit="handleLogin();return false;" novalidate>
       <div class="modal-fields">
         <div class="form-group">
           <label class="form-label" for="loginEmail">Email Address</label>
@@ -1614,9 +1615,10 @@ tr:hover td { background: var(--bg); }
           <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
         </div>
       </div>
+      </form>
     </div>
     <div class="modal-footer" style="flex-direction:column;gap:12px">
-      <button class="btn btn-primary" style="width:100%" onclick="handleLogin()">Sign In</button>
+      <button type="submit" form="loginForm" class="btn btn-primary" style="width:100%">Sign In</button>
       <p style="font-size:13px;color:var(--text-muted);text-align:center">
         Don't have an account?
         <a href="#" style="color:var(--secondary);font-weight:600">Create one free</a>
